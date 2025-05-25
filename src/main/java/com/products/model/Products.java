@@ -1,27 +1,33 @@
 package com.products.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.products.dto.ProductDto;
+import jakarta.persistence.*;
 
 @Entity
-public class Product {
+@Table(name = "products")
+public class Products {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Double price;
-    private String description;
+    private String description; // Corrigir! valor enviado ao banco foi null.
 
-    public Product() {
+    public Products() {
     }
 
-    public Product(String name, Double price, String description) {
+    public Products(String name, Double price, String description) {
         this.name = name;
         this.price = price;
         this.description = description;
+    }
+
+    //Construtor DTO
+    public Products(ProductDto dto) {
+        this.name = dto.name();
+        this.price = dto.price();
+        this.description = dto.description();
     }
 
     public String getName() {
