@@ -21,14 +21,26 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<Products>> listProducts() {
         return ResponseEntity.ok(productService.listProducts());
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<String> addProduct(@RequestBody @Valid ProductDto product) {
-       productService.addProduct(product);
-       return ResponseEntity.ok("Produto adicionado com sucesso");
+        productService.addProduct(product);
+        return ResponseEntity.ok("Produto adicionado com sucesso");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto newProduct) {
+        return productService.updateProduct(id, newProduct)
+                .map(products -> ResponseEntity.ok("Pessoa alterada com sucesso!"))
+                .orElseGet(() -> ResponseEntity.status(404).body("Pessoa não encontrada!"));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.deleteProduct(id));
     }
 }

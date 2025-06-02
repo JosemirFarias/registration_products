@@ -12,7 +12,7 @@ public class Products {
     private Long id;
     private String name;
     private Double price;
-    private String description; // Corrigir! valor enviado ao banco foi null.
+    private String description;
 
     public Products() {
     }

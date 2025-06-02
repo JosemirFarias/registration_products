@@ -33,4 +33,23 @@ public class ProductService {
     }
 
     //Metodo para atualizar produto buscando por ID
+    public Optional<Products> updateProduct(Long id, ProductDto newProduct) {
+        return productRepository.findById(id).map(product -> {
+            product.setName(newProduct.name());
+            product.setPrice(newProduct.price());
+            product.setDescription(newProduct.description());
+            return productRepository.save(product);
+        });
+    }
+
+    //Metodo para deletar produto por ID
+    public String deleteProduct(Long id) {
+        Optional<Products> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            productRepository.deleteById(id);
+            return "Produto deletado com sucesso!";
+        } else {
+            return "Produto não encontrado!";
+        }
+    }
 }
