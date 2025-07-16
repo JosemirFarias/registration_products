@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -24,6 +25,11 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Products>> listProducts() {
         return ResponseEntity.ok(productService.listProducts());
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Products>getProductsById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
     @PostMapping
