@@ -27,9 +27,9 @@ public class ProductService {
     }
 
     //Metodo para adicionar os produtos no banco de dados
-    public Products addProduct(ProductDto dto) {
+    public void addProduct(ProductDto dto) {
         Products product = new Products(dto);
-        return productRepository.save(product);
+        productRepository.save(product);
     }
 
     //Metodo para atualizar produto buscando por ID

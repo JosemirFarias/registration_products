@@ -41,8 +41,8 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDto newProduct) {
         return productService.updateProduct(id, newProduct)
-                .map(products -> ResponseEntity.ok("Pessoa alterada com sucesso!"))
-                .orElseGet(() -> ResponseEntity.status(404).body("Pessoa não encontrada!"));
+                .map(products -> ResponseEntity.ok("Produto alterado com sucesso!"))
+                .orElseGet(() -> ResponseEntity.status(404).body("Produto não encontrado!"));
     }
 
     @DeleteMapping("/{id}")
