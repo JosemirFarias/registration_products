@@ -1,6 +1,7 @@
 package com.products.service;
 
 import com.products.dto.ProductDto;
+import com.products.exception.ExistingProductException;
 import com.products.model.Products;
 import com.products.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,14 @@ public class ProductService {
     }
 
     //Metodo para adicionar os produtos no banco de dados
-    public void addProduct(ProductDto dto) {
+    public Products addProduct(ProductDto dto) {
+        Optional<Products> existingProduct = productRepository.findByName(dto.name());
+
+        if (existingProduct.isPresent()) {
+            throw new ExistingProductException("Já existe um produto com esse nome! " + dto.name());
+        }
         Products product = new Products(dto);
-        productRepository.save(product);
+        return productRepository.save(product);
     }
 
     //Metodo para atualizar produto buscando por ID
