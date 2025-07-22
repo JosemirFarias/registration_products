@@ -2,6 +2,7 @@ package com.products.service;
 
 import com.products.dto.ProductDto;
 import com.products.exception.ExistingProductException;
+import com.products.exception.ProductNotFoundException;
 import com.products.model.Products;
 import com.products.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Products> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Products getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("ID" + id));
     }
 
     //Metodo para adicionar os produtos no banco de dados

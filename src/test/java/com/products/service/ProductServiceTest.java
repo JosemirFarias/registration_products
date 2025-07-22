@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -26,6 +27,7 @@ public class ProductServiceTest {
     @InjectMocks
     private ProductService productService;
 
+    // Testa o metodo que lista os produtos.
     @Test
     public void testListAllProducts() {
         // 4. Cria produtos de exemplo.
@@ -48,5 +50,25 @@ public class ProductServiceTest {
 
         System.out.println("Tamanho = " + resultado.size());
         System.out.println("Resultado = " + resultado);
+    }
+
+    // Testa busca por ID.
+    @Test
+    public void testGetProductById() {
+
+        Products item1 = new Products("Caderno", 25.00,"Capa dura");
+
+        when(productRepository.findById(1L)).thenReturn(Optional.of(item1));
+
+        Products productResult = productService.getProductById(1L);
+
+        assertNotNull(productResult);
+        assertEquals("Caderno", productResult.getName());
+        assertEquals(25.00, productResult.getPrice());
+        assertEquals("Capa dura", productResult.getDescription());
+
+        verify(productRepository, times(1)).findById(1L);
+
+        System.out.println("Resultado = " + productResult);
     }
 }
